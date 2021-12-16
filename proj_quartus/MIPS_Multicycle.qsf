@@ -1,0 +1,110 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2020  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and any partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel FPGA IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Intel and sold by Intel or its authorized distributors.  Please
+# refer to the applicable agreement for further details, at
+# https://fpgasoftware.intel.com/eula.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+# Date created = 11:35:45  December 16, 2021
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		MIPS_Multicycle_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "MAX 10"
+set_global_assignment -name DEVICE 10M50DAF484C7G
+set_global_assignment -name TOP_LEVEL_ENTITY MIPS_Multicycle
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:35:45  DECEMBER 16, 2021"
+set_global_assignment -name LAST_QUARTUS_VERSION "20.1.1 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/addrDecoder.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/addrDecoderRAM1.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/addrDecoderROM.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/memDec.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/Memory_System.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/muxMEM.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/Program_Memory.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/Program_Memory_TB.v
+set_global_assignment -name VERILOG_FILE ../src/Sistema_Mem/singlePortRAM.v
+set_global_assignment -name VERILOG_FILE ../src/Reg_File/decoder.v
+set_global_assignment -name VERILOG_FILE ../src/Reg_File/FF.v
+set_global_assignment -name VERILOG_FILE ../src/Reg_File/FFzero.v
+set_global_assignment -name VERILOG_FILE ../src/Reg_File/mux.v
+set_global_assignment -name VERILOG_FILE ../src/Reg_File/proof.v
+set_global_assignment -name VERILOG_FILE ../src/Reg_File/regFile.v
+set_global_assignment -name VERILOG_FILE ../src/Reg_File/Register_File_TB.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/ALU.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/Buffer.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/Buffer2Bus.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/Data_Path.v
+set_global_assignment -name SYSTEMVERILOG_FILE ../src/Data_Path/Data_Path_TB.sv
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/mux2to1.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/mux4to1.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/PC.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/SignExtend.v
+set_global_assignment -name VERILOG_FILE ../src/Data_Path/SignExtend8to16.v
+set_global_assignment -name VERILOG_FILE ../src/Control_Unit/ALU_Decoder.v
+set_global_assignment -name VERILOG_FILE ../src/Control_Unit/Control_Unit.v
+set_global_assignment -name VERILOG_FILE ../src/Control_Unit/CoreMips.v
+set_global_assignment -name VERILOG_FILE ../src/Control_Unit/Main_Controller.v
+set_global_assignment -name VERILOG_FILE ../src/GPIO/Clock_Gen.v
+set_global_assignment -name VERILOG_FILE ../src/GPIO/cont_1s_RCO.v
+set_global_assignment -name VERILOG_FILE ../src/GPIO/MIPS_Multicycle.v
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_P11 -to MAX10_CLK1_50
+set_location_assignment PIN_A8 -to LEDR[0]
+set_location_assignment PIN_A9 -to LEDR[1]
+set_location_assignment PIN_A10 -to LEDR[2]
+set_location_assignment PIN_B10 -to LEDR[3]
+set_location_assignment PIN_D13 -to LEDR[4]
+set_location_assignment PIN_C13 -to LEDR[5]
+set_location_assignment PIN_E14 -to LEDR[6]
+set_location_assignment PIN_D14 -to LEDR[7]
+set_location_assignment PIN_A11 -to LEDR[8]
+set_location_assignment PIN_C10 -to SW[0]
+set_location_assignment PIN_C11 -to SW[1]
+set_location_assignment PIN_D12 -to SW[2]
+set_location_assignment PIN_C12 -to SW[3]
+set_location_assignment PIN_A12 -to SW[4]
+set_location_assignment PIN_B12 -to SW[5]
+set_location_assignment PIN_A13 -to SW[6]
+set_location_assignment PIN_A14 -to SW[7]
+set_location_assignment PIN_B14 -to SW[8]
+set_location_assignment PIN_F15 -to SW[9]
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity DE10_LITE_Golden_Top -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity DE10_LITE_Golden_Top -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -entity DE10_LITE_Golden_Top -section_id Top
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity DE10_LITE_Golden_Top -section_id Top
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
