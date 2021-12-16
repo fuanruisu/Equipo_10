@@ -128,7 +128,9 @@ ALU1
 (		 // ARITHMETIC UNIT
 .y(ALUResult),
 .a(SrcA), .b(SrcB),
-.select(ALUControl)
+.select(ALUControl),
+.PC(PC),    //Added additional inputs for branches and jumps
+.Imm(SignExtOut) //Added
 );
 
 Buffer #(.WIDTH(WIDTH))
