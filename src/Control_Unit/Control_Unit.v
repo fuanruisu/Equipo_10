@@ -6,7 +6,7 @@ output [2:0] ALUControl,
 output [1:0] ALUSrcB 
 
 );
-wire [1:0] ALUOp;
+wire [2:0] ALUOp;
 
 ALU_Decoder ALUDec1(
 .ALUOp(ALUOp),

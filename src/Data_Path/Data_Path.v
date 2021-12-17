@@ -49,6 +49,7 @@ BF1
 .Addr_o(Instr)
 );
 
+
 assign op = Instr[31:26];
 assign funct = Instr[5:0];
 
