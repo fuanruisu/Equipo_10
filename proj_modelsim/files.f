@@ -26,10 +26,7 @@
 ../src/Sistema_Mem/addrDecoderRAM1.v
 ../src/Sistema_Mem/muxMEM.v
 ../src/Sistema_Mem/singlePortRAM.v
-../src/GPIO/Clock_Gen_inst.v
 ../src/GPIO/Frequency_Divisor.v
 ../src/GPIO/MIPS_Multicycle.v
-../src/GPIO/greybox_tmp/cbx_args.txt
 ../src/GPIO/Clock_Gen.v
 ../src/GPIO/cont_1s_RCO.v
-../src/GPIO/Clock_Gen_bb.v

@@ -1,7 +1,7 @@
 module ALU #(parameter WIDTH = 32)(		 // ARITHMETIC UNIT
 output reg [WIDTH-1: 0] 	y,
 input		[WIDTH-1:0]	a, b,
-input		[2: 0]	select
+input		[2: 0]	select,
 input [WIDTH-1:0]   PC, //Added
 input [WIDTH-1:0]   Imm //Added
 );

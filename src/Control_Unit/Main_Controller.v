@@ -15,7 +15,7 @@ localparam [3:0] FETCH 	= 4'd0,
 				 ADDIEX = 4'd9,
 				 ADDIWB = 4'd10,
 				 EXEC 	= 4'd6,
-				 ALUWB 	= 4'd7;
+				 ALUWB 	= 4'd7,
 				 BRANCH = 4'd8, //Added
 				 JUMP 	= 4'd11; //Added
 				
