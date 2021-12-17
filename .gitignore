@@ -16,3 +16,5 @@
 transcript
 !*.sof
 *.bak
+*output_files/
+*.dat
