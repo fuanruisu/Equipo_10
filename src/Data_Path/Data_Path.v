@@ -134,6 +134,7 @@ ALU1
 .Imm(SignExtOut) //Added
 );
 
+
 Buffer #(.WIDTH(WIDTH))
 BF3
 (
@@ -147,7 +148,5 @@ M6
 (.in1(ALUResult), .in2(ALU_o), 
 .sel(PCsrc),
 .regOut(PCRetro));
-
-
 
 endmodule 

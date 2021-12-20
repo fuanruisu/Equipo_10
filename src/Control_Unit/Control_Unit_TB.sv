@@ -17,16 +17,18 @@ CoreMips Core1(
 
 initial // Clock generator
   begin
-    forever #1 clk_tb = !clk_tb;
+    forever #100 clk_tb = !clk_tb;
   end
 
 initial begin
-	#0 GPIO_i_tb = 8'd15;
+	#0 GPIO_i_tb = 8'd0;
 	#0 rst_tb = 0;
-	#5 rst_tb  = 1;
+	#15 rst_tb  = 1;
 	
 end
 
-
+always @(ALUOutput_tb) begin
+	$display("ALUOutput = %h",ALUOutput_tb);
+end
 
 endmodule
