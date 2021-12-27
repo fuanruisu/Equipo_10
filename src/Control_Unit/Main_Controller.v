@@ -1,7 +1,7 @@
 module Main_Controller(
 input [5:0] Opcode,
 input clk, rst_n,
-output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,//Branch
+output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,Branch,
 output reg [1:0] ALUSrcB, ALUOp 
 );
 
@@ -9,7 +9,7 @@ reg [3:0] state, next;
 
 localparam [3:0] FETCH = 4'd0,
 					 DECODE = 4'd1,
-					 PEREX = 4'd2,
+					 PEREX = 4'd2,//PER: peripheral
 					 PERWB = 4'd3,
 					 ADDIEX = 4'd9,
 					 ADDIWB = 4'd10,
