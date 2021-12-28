@@ -17,13 +17,13 @@ CoreMips Core1(
 
 initial // Clock generator
   begin
-    forever #100 clk_tb = !clk_tb;
+    forever #2 clk_tb = !clk_tb;
   end
 
 initial begin
 	#0 GPIO_i_tb = 8'd0;
 	#0 rst_tb = 0;
-	#15 rst_tb  = 1;
+	#3 rst_tb  = 1;
 	
 end
 

@@ -23,7 +23,7 @@ begin
         	 $display("PC: %h, PC4: %h, BAdr: %b, BEQ(y): %h", PC, PC4, branchAddress,  y); 
          	end //Added
         3'b110: begin 
-        	y = {PC[31:28], Imm[25:0], 2'b00} ;
+        	y = {PC4[31:28], Imm[25:0], 2'b00} ;
          	$display("PC: %h, J: %h", PC, y); 
          	end //Added
         default: y = 32'b0;
@@ -31,3 +31,4 @@ begin
 end
 
 endmodule
+//0000000000000000000000000001100
