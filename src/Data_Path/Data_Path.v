@@ -150,7 +150,7 @@ M6
 .regOut(PCRetro));
 
 mux2to1 #(.WIDTH(WIDTH))
-M6(
+PC_Jump(
     .in1(PCRetro),
     .in2({PC[31:28], Instr[25:0], {2{1'b0}}}), 
     .sel(Jump),
