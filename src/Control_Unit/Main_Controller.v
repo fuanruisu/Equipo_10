@@ -33,6 +33,7 @@ always @(posedge clk or negedge rst_n)
 		next <= 4'bx;
 		case(state)
 			FETCH: begin
+				$display("FETCH");
 				PCWrite 	<= 1'b1;
 				MemWrite 	<= 1'b0;  
 				IorD		<= 1'b0;
@@ -52,6 +53,7 @@ always @(posedge clk or negedge rst_n)
 			end
 
 			DECODE: begin
+				$display("DECODE");
 				PCWrite 	<= 1'b0;
 				MemWrite 	<= 1'b0;  
 				IorD		<= 1'b0;
@@ -74,6 +76,7 @@ always @(posedge clk or negedge rst_n)
 			end
 
 			EXEC:begin
+				$display("EXEC");
 				PCWrite 	<= 1'b0;
 				MemWrite 	<= 1'b0;  
 				IorD		<= 1'b0;
@@ -91,6 +94,7 @@ always @(posedge clk or negedge rst_n)
 			end
 			
 			ALUWB:begin
+				$display("WB");
 				PCWrite 	<= 1'b0;
 				MemWrite 	<= 1'b0;  
 				IorD		<= 1'b0;
@@ -106,6 +110,7 @@ always @(posedge clk or negedge rst_n)
 
 		// === ADDI ==================
 			ADDIEX: begin 
+				$display("ADDI EX");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b010;
@@ -117,6 +122,7 @@ always @(posedge clk or negedge rst_n)
 			end
 
 			ADDIWB: begin 
+				$display("ADDI WB");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b010;
@@ -128,6 +134,7 @@ always @(posedge clk or negedge rst_n)
 
 		// === ADD ===================
 			ADDEX: begin 
+				$display("ADD EX");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b00; 
 				ALUControl 	<= 3'b010;
@@ -139,6 +146,7 @@ always @(posedge clk or negedge rst_n)
 			end
 
 			ADDWB: begin
+				$display("ADD WB");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b00; 
 				ALUControl 	<= 3'b010;
@@ -150,6 +158,7 @@ always @(posedge clk or negedge rst_n)
 
 		// === ORI ==================
 			PEREX: begin
+				$display("ORI EX");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b001;
@@ -161,6 +170,7 @@ always @(posedge clk or negedge rst_n)
 			end
 
 			PERWB: begin
+				$display("ORI WB");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b001;
@@ -172,6 +182,7 @@ always @(posedge clk or negedge rst_n)
 
 		// === BEQ =================
 			BRANCH: begin
+				$display("BEQ");
 				PCWrite 	<= 1'b0;
 				MemWrite 	<= 1'b0;  
 				IorD		<= 1'b0;
@@ -190,6 +201,7 @@ always @(posedge clk or negedge rst_n)
 			end
 		// === J ====================
 			JUMP: begin
+				$display("JUMP");
 				PCWrite 	<= 1'b1;
 				MemWrite 	<= 1'b0;  
 				IorD		<= 1'b0;
@@ -209,6 +221,7 @@ always @(posedge clk or negedge rst_n)
 
 		// === DEFAULT STATE ============
 				default: begin
+					$display("DEFAULT");
 					PCWrite 	<= 1'b0;
 					MemWrite 	<= 1'b0;  
 					IorD		<= 1'b0;
