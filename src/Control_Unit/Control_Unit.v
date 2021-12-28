@@ -1,6 +1,6 @@
 module Control_Unit(
 input [5:0] Opcode, Funct,
-input clk, rst,
+input clk, rst, zero,
 output MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,//Branch,
 output [2:0] ALUControl,
 output [1:0] ALUSrcB 
@@ -27,6 +27,7 @@ Main_Controller MainControl1(
 .MemWrite(MemWrite), 
 .PCWrite(PCWrite),
 .Ori(Ori),
+.zero(zero),
 //.Branch(Branch), 
 .RegWrite(RegWrite),
 .ALUSrcB(ALUSrcB), .ALUOp(ALUOp) 

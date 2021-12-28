@@ -1,7 +1,7 @@
 module Main_Controller(
 input [5:0] Opcode,
-input clk, rst_n,
-output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,Branch,
+input clk, rst_n, zero,
+output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,
 output reg [1:0] ALUSrcB, ALUOp 
 );
 
@@ -11,6 +11,7 @@ localparam [3:0] FETCH = 4'd0,
 					 DECODE = 4'd1,
 					 PEREX = 4'd2,//PER: peripheral
 					 PERWB = 4'd3,
+					 BRANCH = 4'd4,
 					 ADDIEX = 4'd9,
 					 ADDIWB = 4'd10,
 					 EXEC = 4'd6,
@@ -24,7 +25,7 @@ always @(posedge clk or negedge rst_n)
 		//PCSrc <= 1'bx;
 		end
 	else state <= next;
-	always @(state) begin
+	always @(state, zero) begin
 		next <= 4'bx;
 		case(state)
 			FETCH: begin
@@ -51,13 +52,14 @@ always @(posedge clk or negedge rst_n)
 				MemtoReg <= 1'bx; 
 				RegWrite <= 0;
 				ALUSrcA <= 0; 
-				ALUSrcB <= 2'b01; 
+				ALUSrcB <= 2'b11; 
 				ALUOp <= 2'b00; 
 				PCSrc <= 0;
 				Ori<=1'bx;
 				if (Opcode == 6'b0) next <= EXEC;
 				else if (Opcode == 6'h8) next <= ADDIEX;
 				else if (Opcode == 6'hd) next <= PEREX;
+				else if (Opcode == 6'h4) next <= BRANCH;
 				
 			end
 			EXEC:begin
@@ -103,6 +105,7 @@ always @(posedge clk or negedge rst_n)
 				ALUOp <= 2'b00; 
 				PCSrc <= 1'bx;
 				Ori<=1'b0;
+				
 				next <= ADDIWB;
 			end
 			ADDIWB: begin
@@ -150,6 +153,22 @@ always @(posedge clk or negedge rst_n)
 				Ori<=1'bx;
 				next <= FETCH;
 				end
+			BRANCH: begin
+				PCWrite <= 0; 
+				IorD <= 1'bx; 
+				MemWrite <= 0; 
+				IRWrite <= 0; 
+				RegDst <= 1'bx; 
+				MemtoReg <= 1'bx; 
+				RegWrite <= 0;
+				ALUSrcA <= 0; 
+				ALUSrcB <= 2'b11; 
+				ALUOp <= 2'b00; 
+				PCSrc <=0;
+				Ori<=1'b0;
+				next <= FETCH;
+				end
+		
 			endcase
 			
 	end

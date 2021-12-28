@@ -21,7 +21,7 @@ initial // Clock generator
   end
 
 initial begin
-	#0 GPIO_i_tb = 8'd15;
+	#0 GPIO_i_tb = 8'd0;
 	#0 rst_tb = 0;
 	#0.5 rst_tb  = 1;
 	#5 en_tb = 1;

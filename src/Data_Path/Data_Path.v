@@ -4,7 +4,8 @@ input [1:0] ALUSrcB,
 input [15:0] GPIO_i,
 input [2:0] ALUControl,
 output [WIDTH-1:0] ALU_o, //Se dejará de esta forma, ya que es mejor práctica crear un wrapper para configurar los perifericos
-output [5:0] op, funct
+output [5:0] op, funct,
+output zero
 );
 wire [WIDTH-1:0] RegFData1, RegFData2, DblBusOut1, DblBusOut2, M3Out, InM3, Instr, SignExtOut, MemOut, Address, PC, SrcB, SrcA;
 wire [WIDTH-1:0] ALUResult,PCRetro;
@@ -128,7 +129,8 @@ ALU1
 (		 // ARITHMETIC UNIT
 .y(ALUResult),
 .a(SrcA), .b(SrcB),
-.select(ALUControl)
+.select(ALUControl),
+.zero(zero)
 );
 
 Buffer #(.WIDTH(WIDTH))
