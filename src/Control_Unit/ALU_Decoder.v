@@ -7,7 +7,8 @@ always @ (*) begin
 	case(ALUOp)
 	2'b00: ALUControl = 3'b010;
 	2'b01: ALUControl = 3'b110;
-	2'b10: 
+	2'b11: ALUControl = 3'b000;
+	2'b10:  
 		begin	
 		case(func)
 		6'b100000: ALUControl = 3'b010;

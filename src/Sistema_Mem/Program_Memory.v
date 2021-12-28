@@ -28,7 +28,7 @@ module Program_Memory
 
 	initial
 	begin
-//		$readmemh("../../assembly_code/hex", rom);//for FPGA downloading purposes
+		//$readmemh("../../assembly_code/hex", rom);//for FPGA downloading purposes
 		$readmemh("T7hex", rom);//for modelsim purpose
 	end
 

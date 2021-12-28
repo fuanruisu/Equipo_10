@@ -1,9 +1,9 @@
 module Control_Unit(
 input [5:0] Opcode, Funct,
 input clk, rst,
-output MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,Branch,
+output MemtoReg, RegDst, IorD, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,Branch,
 output [2:0] ALUControl,
-output [1:0] ALUSrcB 
+output [1:0] ALUSrcB, PCSrc
 
 );
 wire [1:0] ALUOp;

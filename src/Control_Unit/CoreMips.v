@@ -6,8 +6,8 @@ output [31:0] ALUOutput
 );
 localparam WIDTH = 32, MEMORY_DEPTH = 64;
 wire [5:0] Opcode, funct;
-wire MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, zero, Branch;
-wire [1:0] ALUSrcB;
+wire MemtoReg, RegDst, IorD, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, zero, Branch;
+wire [1:0] ALUSrcB, PCSrc;
 wire [2:0] ALUControl;
 wire [15:0] Per_port;
 wire FlagBranch, PCEn;
@@ -31,7 +31,7 @@ SignExt8b
 //'Til here PCWrite is directly connected to PCEn but later it has to be connected as the diagram shows
 Data_Path #(.WIDTH(WIDTH), .MEMORY_DEPTH(MEMORY_DEPTH)) D1(
 .PCen(PCEn), .IorD(IorD), .MemWrite(MemWrite), .IRWrite(IRWrite), .RegDst(RegDst), .MemtoReg(MemtoReg), 
-.RegWrite(RegWrite), .ALUSrcA(ALUSrcA), .PCsrc(PCSrc), .clk(clk), .reset(rst),
+.RegWrite(RegWrite), .ALUSrcA(ALUSrcA), .PCSrc(PCSrc), .clk(clk), .reset(rst),
 .ALUSrcB(ALUSrcB),
 .GPIO_i(Per_port),
 .ALUControl(ALUControl),

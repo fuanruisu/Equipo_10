@@ -1,6 +1,6 @@
 module Data_Path #(parameter WIDTH = 32, MEMORY_DEPTH = 64)(
-input PCen, IorD, Ori, MemWrite, IRWrite, RegDst, MemtoReg, RegWrite, ALUSrcA, PCsrc, clk, reset,
-input [1:0] ALUSrcB,
+input PCen, IorD, Ori, MemWrite, IRWrite, RegDst, MemtoReg, RegWrite, ALUSrcA, clk, reset,
+input [1:0] ALUSrcB,PCSrc,
 input [15:0] GPIO_i,
 input [2:0] ALUControl,
 output [WIDTH-1:0] ALU_o, //Se dejará de esta forma, ya que es mejor práctica crear un wrapper para configurar los perifericos
@@ -8,7 +8,7 @@ output [5:0] op, funct,
 output zero
 );
 wire [WIDTH-1:0] RegFData1, RegFData2, DblBusOut1, DblBusOut2, M3Out, InM3, Instr, SignExtOut, MemOut, Address, PC, SrcB, SrcA;
-wire [WIDTH-1:0] ALUResult,PCRetro;
+wire [WIDTH-1:0] ALUResult,PCRetro, Shif2LPad;
 wire [WIDTH/2-1:0] Per_port;//PCRetro works as input of the PC register in that way get feedback from output
 wire [4:0] M2Out;
 
@@ -141,12 +141,18 @@ BF3
 .Addr_o(ALU_o)
 );
 
-mux2to1 #(.WIDTH(WIDTH))
+SL2Pad Padding(
+.MSBAd(PC[31:28]),
+.offset(Instr[25:0]),
+.offsetpad(Shif2LPad)
+);
+
+
+mux4to1 #(.WIDTH(WIDTH))
 M6
-(.in1(ALUResult), .in2(ALU_o), 
-.sel(PCsrc),
-.regOut(PCRetro));
-
-
+(
+.in1(ALUResult), .in2(ALU_o), .in3(Shif2LPad), .in4(0), 
+.sel(PCSrc),
+.MOut(PCRetro));
 
 endmodule 

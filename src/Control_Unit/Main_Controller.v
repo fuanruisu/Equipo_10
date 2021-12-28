@@ -1,8 +1,8 @@
 module Main_Controller(
 input [5:0] Opcode,
 input clk, rst_n,
-output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, Branch,
-output reg [1:0] ALUSrcB, ALUOp 
+output reg MemtoReg, RegDst, IorD, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, Branch,
+output reg [1:0] ALUSrcB, ALUOp, PCSrc
 );
 
 reg [3:0] state, next;
@@ -12,6 +12,7 @@ localparam [3:0] FETCH = 4'd0,
 					 PEREX = 4'd2,//PER: peripheral
 					 PERWB = 4'd3,
 					 BRANCH = 4'd4,
+					 JUMP = 4'd5,
 					 ADDIEX = 4'd9,
 					 ADDIWB = 4'd10,
 					 EXEC = 4'd6,
@@ -39,7 +40,7 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 0; 
 				ALUSrcB <= 2'b01; 
 				ALUOp <= 2'b00; 
-				PCSrc <= 0;
+				PCSrc <= 2'b0;
 				Ori<=1'bx;
 				Branch<=1'bx;
 				next <= DECODE;
@@ -55,7 +56,7 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 0; 
 				ALUSrcB <= 2'b11; 
 				ALUOp <= 2'b00; 
-				PCSrc <= 0;
+				PCSrc <= 2'b0;
 				Ori<=1'b0;
 				Branch<=1'bx;
 				
@@ -64,13 +65,14 @@ always @(posedge clk or negedge rst_n)
 				else if (Opcode == 6'h8) next <= ADDIEX;
 				else if (Opcode == 6'hd) next <= PEREX;
 				else if (Opcode == 6'h4) next <= BRANCH;
+				else if (Opcode == 6'h2) next <= JUMP;
 				
 			end
 			EXEC:begin
 				MemtoReg <= 0;
 				RegDst <= 0;
 				IorD <= 0; 
-				PCSrc <= 0; 
+				PCSrc <= 2'b0; 
 				ALUSrcA <= 1; 
 				IRWrite <= 0; 
 				MemWrite <= 0; 
@@ -86,7 +88,7 @@ always @(posedge clk or negedge rst_n)
 				MemtoReg <= 0;
 				RegDst <= 1;
 				IorD <= 0; 
-				PCSrc <= 0; 
+				PCSrc <= 2'b0; 
 				ALUSrcA <= 0; 
 				IRWrite <= 0; 
 				MemWrite <= 0; 
@@ -109,7 +111,7 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 01; 
 				ALUSrcB <= 2'b10; 
 				ALUOp <= 2'b00; 
-				PCSrc <= 1'bx;
+				PCSrc <= 2'bx;
 				Ori<=1'b0;
 				Branch<=1'bx;
 				next <= ADDIWB;
@@ -125,7 +127,7 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 1'bx; 
 				ALUSrcB <= 2'bx; 
 				ALUOp <= 2'bx; 
-				PCSrc <= 1'bx;
+				PCSrc <= 2'bx;
 				Ori<=1'bx;
 				Branch<=1'bx;
 				next <= FETCH;
@@ -138,10 +140,10 @@ always @(posedge clk or negedge rst_n)
 				RegDst <= 1'b1; 
 				MemtoReg <= 1'b0; 
 				RegWrite <= 1;
-				ALUSrcA <= 01; 
+				ALUSrcA <= 1'bx; 
 				ALUSrcB <= 2'b10; 
-				ALUOp <= 2'b00; 
-				PCSrc <= 1'bx;
+				ALUOp <= 2'b11; 
+				PCSrc <= 2'bx;
 				Ori<=1'b1;
 				Branch<=1'bx;
 				next <= PERWB;
@@ -157,7 +159,7 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 1'bx; 
 				ALUSrcB <= 2'bx; 
 				ALUOp <= 2'bx; 
-				PCSrc <= 1'bx;
+				PCSrc <= 2'bx;
 				Ori<=1'bx;
 				Branch<=1'bx;
 				next <= FETCH;
@@ -173,12 +175,27 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 1; 
 				ALUSrcB <= 2'b00; 
 				ALUOp <= 2'b01; 
-				PCSrc <=1;
+				PCSrc <=2'b01;
 				Ori<=1'b0;
 				Branch<=1'b1;
 				next <= FETCH;
 				end
-		
+			JUMP: begin
+				PCWrite <= 1; 
+				IorD <= 1'bx; 
+				MemWrite <= 0; 
+				IRWrite <= 0; 
+				RegDst <= 1'bx; 
+				MemtoReg <= 1'bx; 
+				RegWrite <= 0;
+				ALUSrcA <= 1; 
+				ALUSrcB <= 2'b00; 
+				ALUOp <= 2'b01; 
+				PCSrc <=2'b10;
+				Ori<=1'b0;
+				Branch<=1'b1;
+				next <= FETCH;
+				end
 			endcase
 			
 	end
