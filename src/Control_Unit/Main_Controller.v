@@ -8,16 +8,16 @@ output reg [2:0] ALUControl
 
 reg [3:0] state, next;
 
-localparam [3:0] FETCH 	= 4'd0,
+localparam [3:0] 		FETCH 	= 4'd0,
 				 DECODE = 4'd1,
-				 PEREX 	= 4'd2,
-				 PERWB 	= 4'd3,
-				 ADDEX 	= 4'd4,
+				 PEREX  = 4'd2,
+				 PERWB  = 4'd3,
+				 ADDEX  = 4'd4,
 				 ADDWB	= 4'd5,
 				 ADDIEX = 4'd9,
 				 ADDIWB = 4'd10,
 				 EXEC 	= 4'd6,
-				 ALUWB 	= 4'd7,
+				 ALUWB  = 4'd7,
 				 BRANCH = 4'd8, 
 				 JUMP 	= 4'd11;
 				
@@ -39,15 +39,15 @@ always @(posedge clk or negedge rst_n)
 				IorD		<= 1'b0;
 				IRWrite 	<= 1'b1;
 				PCSrc 		<= 1'b0;
-				//Branch 		<= 1'b0;
+				//Branch 	<= 1'b0;
 				ALUSrcA 	<= 1'b0; 
 				ALUSrcB 	<= 2'b01;
 				ALUControl 	<= 3'b010; 
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
-				RegDst 		<= 1'b0; 
+				RegDst 	<= 1'b0; 
 				Jump		<= 1'b0;
-				Ori			<= 1'b0;
+				Ori		<= 1'b0;
 
 				next <= DECODE;
 			end
@@ -65,9 +65,9 @@ always @(posedge clk or negedge rst_n)
 				ALUControl 	<= 3'b010; 
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
-				RegDst 		<= 1'b0; 
+				RegDst 	<= 1'b0; 
 				Jump		<= 1'b0;
-				Ori			<= 1'b0;
+				Ori		<= 1'b0;
 
 				if 		(Opcode == 6'h4) next <= BRANCH; //BEQ
 				else if (Opcode == 6'h2) next <= JUMP;   //J
@@ -115,8 +115,8 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b010;
 				MemtoReg 	<= 1'b0; 
-				RegDst 		<= 1'b0;
-				Ori			<= 1'b0;
+				RegDst 	<= 1'b0;
+				Ori		<= 1'b0;
 
 				next <= ADDIWB;
 			end
@@ -126,8 +126,9 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b010;
-				RegDst 		<= 1'b0;
-				Ori			<= 1'b0;
+				RegWrite 	<= 1'b1;
+				RegDst 	<= 1'b0;
+				Ori		<= 1'b0;
 
 				next <= FETCH;
 			end
@@ -139,8 +140,8 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcB 	<= 2'b00; 
 				ALUControl 	<= 3'b010;
 				MemtoReg 	<= 1'b0; 
-				RegDst 		<= 1'b1;
-				Ori			<= 1'b0;
+				RegDst 	<= 1'b1;
+				Ori		<= 1'b0;
 
 				next <= ADDWB;
 			end
@@ -150,8 +151,9 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b00; 
 				ALUControl 	<= 3'b010;
-				RegDst 		<= 1'b1;
-				Ori			<= 1'b0;
+				RegWrite 	<= 1'b1;
+				RegDst 	<= 1'b1;
+				Ori		<= 1'b0;
 
 				next <= FETCH;
 			end
@@ -163,8 +165,8 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b001;
 				MemtoReg 	<= 1'b0; 
-				RegDst 		<= 1'b0;
-				Ori			<= 1'b1;
+				RegDst 	<= 1'b0;
+				Ori		<= 1'b1;
 
 				next <= PERWB;
 			end
@@ -174,8 +176,9 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
 				ALUControl 	<= 3'b001;
-				RegDst 		<= 1'b0;
-				Ori			<= 1'b1;
+				RegWrite 	<= 1'b1;
+				RegDst 	<= 1'b0;
+				Ori		<= 1'b1;
 
 				next <= FETCH;
 			end
@@ -188,13 +191,13 @@ always @(posedge clk or negedge rst_n)
 				IorD		<= 1'b0;
 				IRWrite 	<= 1'b0;
 				PCSrc 		<= 1'b1;
-				//Branch 		<= 1'b1;
+				//Branch 	<= 1'b1;
 				ALUSrcA 	<= 1'b1; 
 				ALUSrcB 	<= 2'b00;
 				ALUControl 	<= 3'b101; 
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
-				RegDst 		<= 1'b0; 
+				RegDst 	<= 1'b0; 
 				Jump		<= 1'b0;
 
 				next 	 <= FETCH;
@@ -207,13 +210,13 @@ always @(posedge clk or negedge rst_n)
 				IorD		<= 1'b0;
 				IRWrite 	<= 1'b0;
 				PCSrc 		<= 1'b1;
-				//Branch 		<= 1'b1;
+				//Branch 	<= 1'b1;
 				ALUSrcA 	<= 1'b1; 
 				ALUSrcB 	<= 2'b10;
 				ALUControl 	<= 3'bx; 
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
-				RegDst 		<= 1'b0; 
+				RegDst 	<= 1'b0; 
 				Jump		<= 1'b1;
 
 				next 	 <= FETCH;
@@ -227,15 +230,15 @@ always @(posedge clk or negedge rst_n)
 					IorD		<= 1'b0;
 					IRWrite 	<= 1'b0;
 					PCSrc 		<= 1'b0;
-					//Branch 		<= 1'b0;
+					//Branch 	<= 1'b0;
 					ALUSrcA 	<= 1'b0; 
 					ALUSrcB 	<= 2'b00;
 					ALUControl 	<= 3'b000; 
 					RegWrite 	<= 1'b0;
 					MemtoReg 	<= 1'b0; 
-					RegDst 		<= 1'b0; 
+					RegDst 	<= 1'b0; 
 					Jump		<= 1'b0;
-					Ori			<= 1'b0;
+					Ori		<= 1'b0;
 				end
 
 			endcase
