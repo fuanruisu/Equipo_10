@@ -6,7 +6,7 @@ output reg [2:0] ALUControl);
 always @ (*) begin
 	case(ALUOp)
 	3'b000: ALUControl = 3'b010;
-	3'b001: ALUControl = 3'b110;
+	3'b001: ALUControl = 3'b100;
 	3'b011: ALUControl = 3'b101; //Added
 	3'b100: ALUControl = 3'b110; //Added
 	3'b010: 

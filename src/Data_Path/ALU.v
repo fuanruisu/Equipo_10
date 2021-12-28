@@ -13,11 +13,11 @@ always @(*)
 begin
     y= 3'b0;
     case (select)
-        3'b000:	y = a&b;
-        3'b001:	y = a|b;
+        3'b000:	y = a & b;
+        3'b001:	y = a | b;
         3'b010:	y = a + b;
         3'b011:	y = a + (~b) + 1'b1;
-        3'b110:	y = |a^b;
+        3'b100:	y = a ^ b;
         3'b101:begin
         	 y = (a == b) ? PC4 + branchAddress : PC + 4; 
         	 $display("PC: %h, PC4: %h, BAdr: %b, BEQ(y): %h", PC, PC4, branchAddress,  y); 
