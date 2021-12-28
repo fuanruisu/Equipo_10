@@ -1,7 +1,7 @@
 module Main_Controller(
 input [5:0] Opcode,
-input clk, rst_n, zero,
-output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,
+input clk, rst_n,
+output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, Branch,
 output reg [1:0] ALUSrcB, ALUOp 
 );
 
@@ -25,7 +25,7 @@ always @(posedge clk or negedge rst_n)
 		//PCSrc <= 1'bx;
 		end
 	else state <= next;
-	always @(state, zero) begin
+	always @(state) begin
 		next <= 4'bx;
 		case(state)
 			FETCH: begin
@@ -41,6 +41,7 @@ always @(posedge clk or negedge rst_n)
 				ALUOp <= 2'b00; 
 				PCSrc <= 0;
 				Ori<=1'bx;
+				Branch<=1'bx;
 				next <= DECODE;
 			end
 			DECODE:begin
@@ -55,7 +56,10 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcB <= 2'b11; 
 				ALUOp <= 2'b00; 
 				PCSrc <= 0;
-				Ori<=1'bx;
+				Ori<=1'b0;
+				Branch<=1'bx;
+				
+			
 				if (Opcode == 6'b0) next <= EXEC;
 				else if (Opcode == 6'h8) next <= ADDIEX;
 				else if (Opcode == 6'hd) next <= PEREX;
@@ -75,6 +79,7 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcB <= 00;
 				ALUOp <= 10;
 				Ori<=1'bx;
+				Branch<=1'bx;
 				next <= ALUWB;
 			end
 			ALUWB:begin
@@ -90,6 +95,7 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcB <= 01;
 				ALUOp <= 00;
 				Ori<=1'bx;
+				Branch<=1'bx;
 				next <= FETCH;
 			end
 			ADDIEX: begin
@@ -105,7 +111,7 @@ always @(posedge clk or negedge rst_n)
 				ALUOp <= 2'b00; 
 				PCSrc <= 1'bx;
 				Ori<=1'b0;
-				
+				Branch<=1'bx;
 				next <= ADDIWB;
 			end
 			ADDIWB: begin
@@ -121,6 +127,7 @@ always @(posedge clk or negedge rst_n)
 				ALUOp <= 2'bx; 
 				PCSrc <= 1'bx;
 				Ori<=1'bx;
+				Branch<=1'bx;
 				next <= FETCH;
 				end
 			PEREX: begin
@@ -136,6 +143,7 @@ always @(posedge clk or negedge rst_n)
 				ALUOp <= 2'b00; 
 				PCSrc <= 1'bx;
 				Ori<=1'b1;
+				Branch<=1'bx;
 				next <= PERWB;
 				end
 			PERWB: begin
@@ -151,6 +159,7 @@ always @(posedge clk or negedge rst_n)
 				ALUOp <= 2'bx; 
 				PCSrc <= 1'bx;
 				Ori<=1'bx;
+				Branch<=1'bx;
 				next <= FETCH;
 				end
 			BRANCH: begin
@@ -161,11 +170,12 @@ always @(posedge clk or negedge rst_n)
 				RegDst <= 1'bx; 
 				MemtoReg <= 1'bx; 
 				RegWrite <= 0;
-				ALUSrcA <= 0; 
-				ALUSrcB <= 2'b11; 
-				ALUOp <= 2'b00; 
-				PCSrc <=0;
+				ALUSrcA <= 1; 
+				ALUSrcB <= 2'b00; 
+				ALUOp <= 2'b01; 
+				PCSrc <=1;
 				Ori<=1'b0;
+				Branch<=1'b1;
 				next <= FETCH;
 				end
 		
