@@ -6,7 +6,7 @@ output [31:0] ALUOutput
 );
 localparam WIDTH = 32, MEMORY_DEPTH = 64;
 wire [5:0] Opcode, Funct;
-wire MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori;
+wire MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, Jump;
 wire [1:0] ALUSrcB;
 wire [2:0] ALUControl;
 wire [15:0] Per_port;
@@ -15,7 +15,7 @@ Control_Unit CU1(
 .Opcode(Opcode), .Funct(Funct),
 .clk(clk), .rst(rst),
 .MemtoReg(MemtoReg), .RegDst(RegDst), .IorD(IorD), .PCSrc(PCSrc), .ALUSrcA(ALUSrcA), 
-.IRWrite(IRWrite), .MemWrite(MemWrite), .PCWrite(PCWrite), .RegWrite(RegWrite), .Ori(Ori),
+.IRWrite(IRWrite), .MemWrite(MemWrite), .PCWrite(PCWrite), .RegWrite(RegWrite), .Ori(Ori), .Jump(Jump),
 .ALUControl(ALUControl),
 .ALUSrcB(ALUSrcB) 
 
@@ -36,6 +36,7 @@ Data_Path #(.WIDTH(WIDTH), .MEMORY_DEPTH(MEMORY_DEPTH)) D1(
 .GPIO_i(Per_port),
 .ALUControl(ALUControl),
 .Ori(Ori),
+.Jump(Jump),
 .ALU_o(ALUOutput), //Se dejará de esta forma, ya que es mejor práctica crear un wrapper para configurar los perifericos
 .op(Opcode), .Funct(Funct)
 );

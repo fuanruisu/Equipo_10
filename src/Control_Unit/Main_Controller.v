@@ -1,7 +1,7 @@
 module Main_Controller(
 input [5:0] Opcode, Funct,
 input clk, rst_n,
-output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, //Branch, PCJump,
+output reg MemtoReg, RegDst, IorD, PCSrc, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, Jump,
 output reg [1:0] ALUSrcB,
 output reg [2:0] ALUControl 
 );
@@ -46,7 +46,7 @@ always @(posedge clk or negedge rst_n)
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
 				RegDst 		<= 1'b0; 
-				//PCJump		<= 1'b1;
+				Jump		<= 1'b0;
 				Ori			<= 1'b0;
 
 				next <= DECODE;
@@ -66,7 +66,7 @@ always @(posedge clk or negedge rst_n)
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
 				RegDst 		<= 1'b0; 
-				//PCJump		<= 1'b1;
+				Jump		<= 1'b0;
 				Ori			<= 1'b0;
 
 				if 		(Opcode == 6'h4) next <= BRANCH; //BEQ
@@ -84,7 +84,7 @@ always @(posedge clk or negedge rst_n)
 				PCSrc 		<= 1'b0;
 				//Branch 		<= 1'b0;
 				RegWrite 	<= 1'b0;
-				//PCJump		<= 1'b1;
+				Jump		<= 1'b0;
 
 				next <= ALUWB;
 
@@ -103,7 +103,7 @@ always @(posedge clk or negedge rst_n)
 				//Branch 		<= 1'b0;
 				RegWrite 	<= 1'b1;
 				MemtoReg 	<= 1'b0; 
-				//PCJump		<= 1'b1;
+				Jump		<= 1'b0;
 
 				next <= FETCH;
 			end
@@ -195,7 +195,7 @@ always @(posedge clk or negedge rst_n)
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
 				RegDst 		<= 1'b0; 
-				//PCJump		<= 1'b1;
+				Jump		<= 1'b0;
 
 				next 	 <= FETCH;
 			end
@@ -210,11 +210,11 @@ always @(posedge clk or negedge rst_n)
 				//Branch 		<= 1'b1;
 				ALUSrcA 	<= 1'b1; 
 				ALUSrcB 	<= 2'b10;
-				ALUControl 	<= 3'b110; 
+				ALUControl 	<= 3'bx; 
 				RegWrite 	<= 1'b0;
 				MemtoReg 	<= 1'b0; 
 				RegDst 		<= 1'b0; 
-				//PCJump		<= 1'b0;
+				Jump		<= 1'b1;
 
 				next 	 <= FETCH;
 				end
@@ -234,7 +234,7 @@ always @(posedge clk or negedge rst_n)
 					RegWrite 	<= 1'b0;
 					MemtoReg 	<= 1'b0; 
 					RegDst 		<= 1'b0; 
-					//PCJump		<= 1'b0;
+					Jump		<= 1'b0;
 					Ori			<= 1'b0;
 				end
 
