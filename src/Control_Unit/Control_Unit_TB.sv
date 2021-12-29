@@ -21,14 +21,15 @@ initial // Clock generator
   end
 
 initial begin
+	//#0 GPIO_i_tb = 8'd2;
 	#0 GPIO_i_tb = 8'd0;
 	#0 rst_tb = 0;
 	#3 rst_tb  = 1;
-	
+
 end
 
 always @(ALUOutput_tb) begin
-	$display("ALUOutput = %h",ALUOutput_tb);
+	$display("%b",ALUOutput_tb);
 end
 
 endmodule
