@@ -88,7 +88,7 @@ always @(posedge clk or negedge rst_n)
 
 				next <= ALUWB;
 
-				if 		(Opcode == 6'h8) next <= ADDIEX; //ADDI
+				if 		(Opcode == 6'h8 || Opcode == 6'h9) next <= ADDIEX; //ADDI
 				else if (Opcode == 6'hd) next <= PEREX; //ORI
 				else if (Opcode == 6'h0 && Funct == 6'h20) next <= ADDEX; //ADD
 			end
@@ -163,7 +163,7 @@ always @(posedge clk or negedge rst_n)
 				//$display("ORI EX");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
-				ALUControl 	<= 3'b001;
+				ALUControl 	<= 3'b100;
 				MemtoReg 	<= 1'b0; 
 				RegDst 	<= 1'b0;
 				Ori		<= 1'b1;
@@ -175,7 +175,7 @@ always @(posedge clk or negedge rst_n)
 				//$display("ORI WB");
 				ALUSrcA 	<= 1'b1;  
 				ALUSrcB 	<= 2'b10; 
-				ALUControl 	<= 3'b001;
+				ALUControl 	<= 3'b100;
 				RegWrite 	<= 1'b1;
 				RegDst 	<= 1'b0;
 				Ori		<= 1'b1;
