@@ -9,6 +9,7 @@ always @ (*) begin
 	3'b001: ALUControl = 3'b110;
 	3'b011: ALUControl = 3'b000;
 	3'b100: ALUControl = 3'b001;
+	3'b101: ALUControl = 3'b101;
 	3'b010:  
 		begin	
 		case(func)

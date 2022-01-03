@@ -6,7 +6,7 @@ output reg [1:0] ALUSrcB, PCSrc, MemtoReg, RegDst,
 output reg [2:0] ALUOp
 );
 
-reg [3:0] state, next;
+reg [4:0] state, next;
 
 localparam [4:0] FETCH = 5'd0,
 					 DECODE = 5'd1,
@@ -23,7 +23,8 @@ localparam [4:0] FETCH = 5'd0,
 					 MEMADR = 5'd12,
 					 MEMREAD = 5'd13,
 					 MEMWB = 5'd14,
-					 MEMWRITE = 5'd15;
+					 MEMWRITE = 5'd15,
+					 MULT = 5'd16;
 					 
 					 
 always @(posedge clk or negedge rst_n)
@@ -68,14 +69,17 @@ always @(posedge clk or negedge rst_n)
 				Branch<=1'bx;
 				
 			
-				if (Opcode == 6'b0) next <= EXEC;
+				if (Opcode == 6'b0 ) next <= EXEC;
 				else if (Opcode == 6'h8 || Opcode == 6'h9) next <= ADDIEX;
 				else if (Opcode == 6'hd) next <= PEREX;
 				else if (Opcode == 6'h4) next <= BRANCH;
 				else if (Opcode == 6'h2) next <= JUMP;
 				else if (Opcode == 6'h3) next <= JAL;
 				else if (Opcode == 6'ha) next <= SLTI;
-				else if (Opcode == 6'h23 || Opcode == 6'h2b) next <= MEMADR;
+				else if (Opcode == 6'h23 || Opcode == 6'h2b) next <= MEMADR;				
+				else if (Opcode == 6'h1c) next <= MULT;
+				
+				
 			end
 			EXEC:begin
 				MemtoReg <= 2'b00;
@@ -95,8 +99,10 @@ always @(posedge clk or negedge rst_n)
 					PCSrc <= 2'b11; 
 					PCWrite <= 1; 
 					next <= FETCH;
-				end
+				end				
 				else next <= ALUWB;
+				
+				
 			end
 			ALUWB:begin
 				MemtoReg <= 2'b00;
@@ -247,13 +253,13 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 1'b1;
 				ALUSrcB <= 2'b10;
 				ALUOp <= 3'b000;
-				IorD <= 1;
+				
 				if(Opcode == 6'h23) next <= MEMREAD;
 				else if (Opcode == 6'h2b) next <= MEMWRITE;
 				end
 			
 			MEMREAD: begin 
-				
+				IorD <= 1;
 				next <= MEMWB;
 				end
 				
@@ -269,6 +275,26 @@ always @(posedge clk or negedge rst_n)
 				MemWrite <= 1;
 				next <= FETCH;
 				end
+				
+			MULT: begin
+				MemtoReg <= 2'b00;
+				RegDst <= 2'b00;
+				IorD <= 0; 
+				PCSrc <= 2'b0; 
+				ALUSrcA <= 1; 
+				IRWrite <= 0; 
+				MemWrite <= 0; 
+				PCWrite <= 0; 
+				RegWrite <= 0;
+				ALUSrcB <= 00;
+				ALUOp <= 3'b101;
+				Ori<=1'bx;
+				Branch<=1'bx;
+							
+				next <= ALUWB;
+			end
+			
+			
 			endcase
 			
 	end
