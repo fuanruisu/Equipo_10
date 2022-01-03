@@ -247,12 +247,13 @@ always @(posedge clk or negedge rst_n)
 				ALUSrcA <= 1'b1;
 				ALUSrcB <= 2'b10;
 				ALUOp <= 3'b000;
+				IorD <= 1;
 				if(Opcode == 6'h23) next <= MEMREAD;
 				else if (Opcode == 6'h2b) next <= MEMWRITE;
 				end
 			
 			MEMREAD: begin 
-				IorD <= 1;
+				
 				next <= MEMWB;
 				end
 				

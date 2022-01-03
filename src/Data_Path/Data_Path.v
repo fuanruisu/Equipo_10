@@ -53,13 +53,13 @@ BF1
 assign op = Instr[31:26];
 assign funct = Instr[5:0];
 
-Buffer #(.WIDTH(WIDTH))
-BF2
-(
-.Addr_i(MemOut),
-.enable(1'b1), .clk(clk), .rst(reset),
-.Addr_o(InM3)
-);
+//Buffer #(.WIDTH(WIDTH))
+//BF2
+//(
+//.Addr_i(MemOut),
+//.enable(1'b1), .clk(clk), .rst(reset),
+//.Addr_o(InM3)
+//);
 
 
 
@@ -75,7 +75,7 @@ M2
 mux4to1 #(.WIDTH(WIDTH))
 M3
 (
-.in1(ALU_o), .in2(InM3), .in3(PC), .in4(0), 
+.in1(ALU_o), .in2(MemOut), .in3(PC), .in4(0), 
 .sel(MemtoReg),
 .MOut(M3Out));
 
