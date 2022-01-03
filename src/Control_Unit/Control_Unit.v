@@ -1,12 +1,12 @@
 module Control_Unit(
 input [5:0] Opcode, Funct,
 input clk, rst,
-output MemtoReg, RegDst, IorD, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,Branch,
+output IorD, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori,Branch,
 output [2:0] ALUControl,
-output [1:0] ALUSrcB, PCSrc
+output [1:0] ALUSrcB, PCSrc, MemtoReg, RegDst 
 
 );
-wire [1:0] ALUOp;
+wire [2:0] ALUOp;
 
 ALU_Decoder ALUDec1(
 .ALUOp(ALUOp),
@@ -16,6 +16,7 @@ ALU_Decoder ALUDec1(
 
 Main_Controller MainControl1(
 .Opcode(Opcode),
+.funct(Funct),
 .clk(clk),
 .rst_n(rst),
 .MemtoReg(MemtoReg), 

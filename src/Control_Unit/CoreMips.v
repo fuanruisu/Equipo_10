@@ -6,8 +6,8 @@ output [31:0] ALUOutput
 );
 localparam WIDTH = 32, MEMORY_DEPTH = 64;
 wire [5:0] Opcode, funct;
-wire MemtoReg, RegDst, IorD, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, zero, Branch;
-wire [1:0] ALUSrcB, PCSrc;
+wire IorD, ALUSrcA, IRWrite, MemWrite, PCWrite, RegWrite, Ori, zero, Branch;
+wire [1:0] ALUSrcB, PCSrc, MemtoReg, RegDst;
 wire [2:0] ALUControl;
 wire [15:0] Per_port;
 wire FlagBranch, PCEn;

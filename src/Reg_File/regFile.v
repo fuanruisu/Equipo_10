@@ -51,7 +51,7 @@ FF regstr25(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[25]),.q(q25)
 FF regstr26(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[26]),.q(q26));
 FF regstr27(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[27]),.q(q27));
 FF regstr28(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[28]),.q(q28));
-FF regstr29(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[29]),.q(q29));
+FFSP regstr29(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[29]),.q(q29));
 FF regstr30(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[30]),.q(q30));
 FF regstr31(.clk(clk),.reset(reset),.d(Write_Data_i),.enable(enable[31]),.q(q31));
 

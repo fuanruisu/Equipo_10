@@ -1,6 +1,6 @@
 module Data_Path #(parameter WIDTH = 32, MEMORY_DEPTH = 64)(
-input PCen, IorD, Ori, MemWrite, IRWrite, RegDst, MemtoReg, RegWrite, ALUSrcA, clk, reset,
-input [1:0] ALUSrcB,PCSrc,
+input PCen, IorD, Ori, MemWrite, IRWrite, RegWrite, ALUSrcA, clk, reset,
+input [1:0] ALUSrcB,PCSrc, RegDst, MemtoReg,
 input [15:0] GPIO_i,
 input [2:0] ALUControl,
 output [WIDTH-1:0] ALU_o, //Se dejará de esta forma, ya que es mejor práctica crear un wrapper para configurar los perifericos
@@ -61,17 +61,23 @@ BF2
 .Addr_o(InM3)
 );
 
-mux2to1 #(.WIDTH(5))
-M2
-(.in1(Instr[20:16]), .in2(Instr[15:11]), 
-.sel(RegDst),
-.regOut(M2Out));
 
-mux2to1 #(.WIDTH(WIDTH))
+
+mux4to1 #(.WIDTH(5))
+M2
+(
+.in1(Instr[20:16]), .in2(Instr[15:11]), .in3(5'd31), .in4(5'd0), 
+.sel(RegDst),
+.MOut(M2Out));
+
+
+
+mux4to1 #(.WIDTH(WIDTH))
 M3
-(.in1(ALU_o), .in2(InM3), 
+(
+.in1(ALU_o), .in2(InM3), .in3(PC), .in4(0), 
 .sel(MemtoReg),
-.regOut(M3Out));
+.MOut(M3Out));
 
 mux2to1 #(.WIDTH(16))
 M3_1
@@ -151,7 +157,7 @@ SL2Pad Padding(
 mux4to1 #(.WIDTH(WIDTH))
 M6
 (
-.in1(ALUResult), .in2(ALU_o), .in3(Shif2LPad), .in4(0), 
+.in1(ALUResult), .in2(ALU_o), .in3(Shif2LPad), .in4(DblBusOut1), 
 .sel(PCSrc),
 .MOut(PCRetro));
 

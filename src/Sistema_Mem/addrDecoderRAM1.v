@@ -7,7 +7,7 @@ output reg [$clog2(numPosMem)-2:0] outAddr
 );
 
 always @(addr) begin
-	if(addr>=32'h10010000 && addr<32'h100100ff) 
+	if(addr>=32'h10010000 && addr<32'h10010256) 
 		outAddr = (addr-32'h10010000)>>2;
 	else 
 		outAddr = 5'bx;
