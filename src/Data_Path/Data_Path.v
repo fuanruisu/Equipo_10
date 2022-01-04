@@ -16,7 +16,7 @@ wire [4:0] M2Out;
 PC #(.WIDTH(WIDTH))
 PC1
 (
-.Addr_i(PCRetro),
+.Addr_i(PCIn),
 .enable(PCen), .clk(clk), .rst(reset),
 .Addr_o(PC)
 );
@@ -49,6 +49,7 @@ BF1
 .enable(IRWrite), .clk(clk), .rst(reset),
 .Addr_o(Instr)
 );
+
 
 assign op = Instr[31:26];
 assign funct = Instr[5:0];
@@ -139,6 +140,7 @@ ALU1
 .zero(zero)
 );
 
+
 Buffer #(.WIDTH(WIDTH))
 BF3
 (
@@ -153,6 +155,12 @@ SL2Pad Padding(
 .offsetpad(Shif2LPad)
 );
 
+mux2to1 #(.WIDTH(WIDTH))
+PC_Jump(
+    .in1(PCRetro),
+    .in2({PC[31:28], Instr[25:0], {2{1'b0}}}), 
+    .sel(Jump),
+    .regOut(PCIn));
 
 mux4to1 #(.WIDTH(WIDTH))
 M6
@@ -161,4 +169,4 @@ M6
 .sel(PCSrc),
 .MOut(PCRetro));
 
-endmodule 
+endmodule

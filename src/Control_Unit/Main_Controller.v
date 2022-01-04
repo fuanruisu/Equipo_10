@@ -25,8 +25,7 @@ localparam [4:0] FETCH = 5'd0,
 					 MEMWB = 5'd14,
 					 MEMWRITE = 5'd15,
 					 MULT = 5'd16;
-					 
-					 
+					 					 
 always @(posedge clk or negedge rst_n)
 	if (!rst_n) begin 
 		state <= FETCH;
@@ -34,7 +33,7 @@ always @(posedge clk or negedge rst_n)
 		//PCSrc <= 1'bx;
 		end
 	else state <= next;
-	always @(state) begin
+	always @(state or Opcode or Funct) begin
 		next <= 4'bx;
 		case(state)
 			FETCH: begin
@@ -78,9 +77,8 @@ always @(posedge clk or negedge rst_n)
 				else if (Opcode == 6'ha) next <= SLTI;
 				else if (Opcode == 6'h23 || Opcode == 6'h2b) next <= MEMADR;				
 				else if (Opcode == 6'h1c) next <= MULT;
-				
-				
 			end
+
 			EXEC:begin
 				MemtoReg <= 2'b00;
 				RegDst <= 2'b00;
@@ -101,9 +99,8 @@ always @(posedge clk or negedge rst_n)
 					next <= FETCH;
 				end				
 				else next <= ALUWB;
-				
-				
 			end
+			
 			ALUWB:begin
 				MemtoReg <= 2'b00;
 				RegDst <= 2'b01;
@@ -151,7 +148,34 @@ always @(posedge clk or negedge rst_n)
 				Ori<=1'bx;
 				Branch<=1'bx;
 				next <= FETCH;
-				end
+			end
+
+		// === ADD ===================
+			ADDEX: begin 
+				//$display("ADD EX");
+				ALUSrcA 	<= 1'b1;  
+				ALUSrcB 	<= 2'b00; 
+				ALUControl 	<= 3'b010;
+				MemtoReg 	<= 1'b0; 
+				RegDst 	<= 1'b1;
+				Ori		<= 1'b0;
+
+				next <= ADDWB;
+			end
+
+			ADDWB: begin
+				//$display("ADD WB");
+				ALUSrcA 	<= 1'b1;  
+				ALUSrcB 	<= 2'b00; 
+				ALUControl 	<= 3'b010;
+				RegWrite 	<= 1'b1;
+				RegDst 	<= 1'b1;
+				Ori		<= 1'b0;
+
+				next <= FETCH;
+			end
+
+		// === ORI ==================
 			PEREX: begin
 				PCWrite <= 0; 
 				IorD <= 1'bx; 
@@ -166,8 +190,10 @@ always @(posedge clk or negedge rst_n)
 				PCSrc <= 2'bx;
 				Ori<=1'b1;
 				Branch<=1'bx;
+        
 				next <= PERWB;
-				end
+			end
+
 			PERWB: begin
 				PCWrite <= 0; 
 				IorD <= 1'bx; 
@@ -198,8 +224,49 @@ always @(posedge clk or negedge rst_n)
 				PCSrc <=2'b01;
 				Ori<=1'b0;
 				Branch<=1'b1;
+
 				next <= FETCH;
+			end
+
+		// === BEQ =================
+			BRANCH: begin
+				//$display("BEQ");
+				PCWrite 	<= 1'b1;
+				MemWrite 	<= 1'b0;  
+				IorD		<= 1'b0;
+				IRWrite 	<= 1'b0;
+				PCSrc 		<= 1'b0;
+				//Branch 	<= 1'b1;
+				ALUSrcA 	<= 1'b1; 
+				ALUSrcB 	<= 2'b00;
+				ALUControl 	<= 3'b101; 
+				RegWrite 	<= 1'b0;
+				MemtoReg 	<= 1'b0; 
+				RegDst 	<= 1'b0; 
+				Jump		<= 1'b0;
+
+				next 	 <= FETCH;
+			end
+		// === J ====================
+			JUMP: begin
+				//$display("JUMP");
+				PCWrite 	<= 1'b1;
+				MemWrite 	<= 1'b0;  
+				IorD		<= 1'b0;
+				IRWrite 	<= 1'b0;
+				PCSrc 		<= 1'b1;
+				//Branch 	<= 1'b1;
+				ALUSrcA 	<= 1'b1; 
+				ALUSrcB 	<= 2'b10;
+				ALUControl 	<= 3'bx; 
+				RegWrite 	<= 1'b0;
+				MemtoReg 	<= 1'b0; 
+				RegDst 	<= 1'b0; 
+				Jump		<= 1'b1;
+
+				next 	 <= FETCH;
 				end
+      
 			JUMP: begin
 				PCWrite <= 1; 
 				IorD <= 1'bx; 
@@ -293,8 +360,7 @@ always @(posedge clk or negedge rst_n)
 							
 				next <= ALUWB;
 			end
-			
-			
+						
 			endcase
 			
 	end

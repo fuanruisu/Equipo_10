@@ -2,9 +2,13 @@ module ALU #(parameter WIDTH = 32)(		 // ARITHMETIC UNIT
 output reg [WIDTH-1: 0] 	y,
 output reg zero,
 input		[WIDTH-1:0]	a, b,
-input		[2: 0]	select
-
+input		[2: 0]	select,
+input [WIDTH-1:0]   PC, //Added
+input [WIDTH-1:0]   Imm //Added
 );
+
+wire [WIDTH-1:0] PC4 = PC + 32'd4;
+wire [WIDTH-1:0] branchAddress = {Imm[15], Imm[15:0], {2{1'b0}}};
 
 always @(*)
 begin
@@ -27,5 +31,7 @@ default:		begin
 				zero = 1'b0;
 				end
 endcase
+
 end
+
 endmodule

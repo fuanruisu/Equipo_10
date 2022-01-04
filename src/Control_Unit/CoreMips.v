@@ -12,7 +12,7 @@ wire [2:0] ALUControl;
 wire [15:0] Per_port;
 wire FlagBranch, PCEn;
 Control_Unit CU1(
-.Opcode(Opcode), .Funct(funct),
+.Opcode(Opcode), .Funct(Funct),
 .clk(clk), .rst(rst),
 .MemtoReg(MemtoReg), .RegDst(RegDst), .IorD(IorD), .PCSrc(PCSrc), .ALUSrcA(ALUSrcA), 
 .IRWrite(IRWrite), .MemWrite(MemWrite), .PCWrite(PCWrite), .RegWrite(RegWrite), .Ori(Ori), .Branch(Branch),
@@ -36,6 +36,7 @@ Data_Path #(.WIDTH(WIDTH), .MEMORY_DEPTH(MEMORY_DEPTH)) D1(
 .GPIO_i(Per_port),
 .ALUControl(ALUControl),
 .Ori(Ori),
+.Jump(Jump),
 .ALU_o(ALUOutput), //Se dejará de esta forma, ya que es mejor práctica crear un wrapper para configurar los perifericos
 .op(Opcode), .funct(funct), .zero(zero)
 );

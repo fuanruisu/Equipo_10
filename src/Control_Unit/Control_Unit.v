@@ -8,10 +8,10 @@ output [1:0] ALUSrcB, PCSrc, MemtoReg, RegDst
 );
 wire [2:0] ALUOp;
 
-ALU_Decoder ALUDec1(
-.ALUOp(ALUOp),
-.func(Funct),
-.ALUControl(ALUControl));
+// ALU_Decoder ALUDec1(
+// .ALUOp(ALUOp),
+// .func(Funct),
+// .ALUControl(ALUControl));
 
 
 Main_Controller MainControl1(
@@ -30,9 +30,8 @@ Main_Controller MainControl1(
 .Ori(Ori),
 .Branch(Branch), 
 .RegWrite(RegWrite),
-.ALUSrcB(ALUSrcB), .ALUOp(ALUOp) 
+.ALUSrcB(ALUSrcB), .ALUControl(ALUControl) 
 );
-
 
 
 endmodule 

@@ -15,6 +15,6 @@
 *.qip
 transcript
 !*.sof
-*.bak
-*output_files/
-*.dat
+.DS_Store
+*.pdf
+
