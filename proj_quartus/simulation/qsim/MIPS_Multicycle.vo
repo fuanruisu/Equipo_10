@@ -1,0 +1,143 @@
+// Copyright (C) 2020  Intel Corporation. All rights reserved.
+// Your use of Intel Corporation's design tools, logic functions 
+// and other software and tools, and any partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Intel Program License 
+// Subscription Agreement, the Intel Quartus Prime License Agreement,
+// the Intel FPGA IP License Agreement, or other applicable license
+// agreement, including, without limitation, that your use is for
+// the sole purpose of programming logic devices manufactured by
+// Intel and sold by Intel or its authorized distributors.  Please
+// refer to the applicable agreement for further details, at
+// https://fpgasoftware.intel.com/eula.
+
+// VENDOR "Altera"
+// PROGRAM "Quartus Prime"
+// VERSION "Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition"
+
+// DATE "01/04/2022 10:48:58"
+
+// 
+// Device: Altera 10M50DAF484C7G Package FBGA484
+// 
+
+// 
+// This Verilog file should be used for ModelSim-Altera (Verilog) only
+// 
+
+`timescale 1 ps/ 1 ps
+
+module DEMUX (
+	REGA,
+	sel,
+	GPIO_o,
+	datapath);
+input 	REGA;
+input 	sel;
+output 	GPIO_o;
+output 	datapath;
+
+wire gnd;
+wire vcc;
+wire unknown;
+
+assign gnd = 1'b0;
+assign vcc = 1'b1;
+assign unknown = 1'bx;
+
+tri1 devclrn;
+tri1 devpor;
+tri1 devoe;
+wire \GPIO_o~output_o ;
+wire \datapath~output_o ;
+wire \REGA~input_o ;
+wire \sel~input_o ;
+wire \GPIO_o~0_combout ;
+wire \datapath~0_combout ;
+
+
+fiftyfivenm_io_obuf \GPIO_o~output (
+	.i(\GPIO_o~0_combout ),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(\GPIO_o~output_o ),
+	.obar());
+// synopsys translate_off
+defparam \GPIO_o~output .bus_hold = "false";
+defparam \GPIO_o~output .open_drain_output = "false";
+// synopsys translate_on
+
+fiftyfivenm_io_obuf \datapath~output (
+	.i(\datapath~0_combout ),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(\datapath~output_o ),
+	.obar());
+// synopsys translate_off
+defparam \datapath~output .bus_hold = "false";
+defparam \datapath~output .open_drain_output = "false";
+// synopsys translate_on
+
+fiftyfivenm_io_ibuf \REGA~input (
+	.i(REGA),
+	.ibar(gnd),
+	.nsleep(vcc),
+	.o(\REGA~input_o ));
+// synopsys translate_off
+defparam \REGA~input .bus_hold = "false";
+defparam \REGA~input .listen_to_nsleep_signal = "false";
+defparam \REGA~input .simulate_z_as = "z";
+// synopsys translate_on
+
+fiftyfivenm_io_ibuf \sel~input (
+	.i(sel),
+	.ibar(gnd),
+	.nsleep(vcc),
+	.o(\sel~input_o ));
+// synopsys translate_off
+defparam \sel~input .bus_hold = "false";
+defparam \sel~input .listen_to_nsleep_signal = "false";
+defparam \sel~input .simulate_z_as = "z";
+// synopsys translate_on
+
+fiftyfivenm_lcell_comb \GPIO_o~0 (
+// Equation(s):
+// \GPIO_o~0_combout  = (\REGA~input_o  & \sel~input_o )
+
+	.dataa(\REGA~input_o ),
+	.datab(\sel~input_o ),
+	.datac(gnd),
+	.datad(gnd),
+	.cin(gnd),
+	.combout(\GPIO_o~0_combout ),
+	.cout());
+// synopsys translate_off
+defparam \GPIO_o~0 .lut_mask = 16'h8888;
+defparam \GPIO_o~0 .sum_lutc_input = "datac";
+// synopsys translate_on
+
+fiftyfivenm_lcell_comb \datapath~0 (
+// Equation(s):
+// \datapath~0_combout  = (\REGA~input_o  & !\sel~input_o )
+
+	.dataa(\REGA~input_o ),
+	.datab(gnd),
+	.datac(gnd),
+	.datad(\sel~input_o ),
+	.cin(gnd),
+	.combout(\datapath~0_combout ),
+	.cout());
+// synopsys translate_off
+defparam \datapath~0 .lut_mask = 16'h00AA;
+defparam \datapath~0 .sum_lutc_input = "datac";
+// synopsys translate_on
+
+assign GPIO_o = \GPIO_o~output_o ;
+
+assign datapath = \datapath~output_o ;
+
+endmodule

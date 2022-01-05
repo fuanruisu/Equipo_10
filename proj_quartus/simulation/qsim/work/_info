@@ -1,0 +1,155 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Projects/arqi/Equipo_10/proj_quartus/simulation/qsim
+vALU
+Z1 !s110 1640641103
+!i10b 1
+!s100 =Q:kPiPd0Nz?k5T9HX_WY1
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IefBKnaj;Rg4NoIFz>7m<o2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1640641100
+Z4 8MIPS_Multicycle.vo
+Z5 FMIPS_Multicycle.vo
+!i122 8
+L0 32 3954
+Z6 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z7 !s108 1640641103.000000
+Z8 !s107 MIPS_Multicycle.vo|
+Z9 !s90 -work|work|MIPS_Multicycle.vo|
+!i113 1
+Z10 o-work work
+Z11 tCvgOpt 0
+n@a@l@u
+vALU_vlg_vec_tst
+R1
+!i10b 1
+!s100 o1E]k^Qhjg4d9K;CkVDF81
+R2
+IjQ^cHeY>oj[I`RgARLQ4E0
+R3
+R0
+w1640641098
+Z12 8Waveform.vwf.vt
+Z13 FWaveform.vwf.vt
+!i122 9
+L0 30 359
+R6
+r1
+!s85 0
+31
+R7
+Z14 !s107 Waveform.vwf.vt|
+Z15 !s90 -work|work|Waveform.vwf.vt|
+!i113 1
+R10
+R11
+n@a@l@u_vlg_vec_tst
+vDEMUX
+Z16 !s110 1641314940
+!i10b 1
+!s100 D7YHam<?3HMH5dg^hA`]i1
+R2
+I<AFhSd0^5dR9Pn2FW:A5k3
+R3
+R0
+w1641314938
+R4
+R5
+!i122 26
+L0 32 112
+R6
+r1
+!s85 0
+31
+Z17 !s108 1641314940.000000
+R8
+R9
+!i113 1
+R10
+R11
+n@d@e@m@u@x
+vDEMUX_vlg_vec_tst
+R16
+!i10b 1
+!s100 82>5VUQN3Kj_Gz40Ae60F1
+R2
+IiX?m^L=H<kM?9ab3Uc9@i2
+R3
+R0
+w1641314935
+R12
+R13
+!i122 27
+L0 30 34
+R6
+r1
+!s85 0
+31
+R17
+R14
+R15
+!i113 1
+R10
+R11
+n@d@e@m@u@x_vlg_vec_tst
+vSL2Pad
+Z18 !s110 1640724652
+!i10b 1
+!s100 K<^K7jfMY[]a55@]YG^=U0
+R2
+IQcI@gW=:omP4eg[4o8WK<1
+R3
+R0
+w1640724649
+R4
+R5
+!i122 20
+L0 32 158
+R6
+r1
+!s85 0
+31
+!s108 1640724651.000000
+R8
+R9
+!i113 1
+R10
+R11
+n@s@l2@pad
+vSL2Pad_vlg_vec_tst
+R18
+!i10b 1
+!s100 d<QQU<T?eSCj>9_Gz>A2g2
+R2
+IXTVfYi@;WGXc4>[6nNiE02
+R3
+R0
+w1640724647
+R12
+R13
+!i122 21
+L0 30 38
+R6
+r1
+!s85 0
+31
+!s108 1640724652.000000
+R14
+R15
+!i113 1
+R10
+R11
+n@s@l2@pad_vlg_vec_tst
